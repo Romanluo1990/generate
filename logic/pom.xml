@@ -12,16 +12,16 @@
 
     <artifactId>logic</artifactId>
 
-   <dependencies>
-       <dependency>
-           <groupId>com.vip.xpf</groupId>
-           <artifactId>api</artifactId>
-       </dependency>
-   </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>com.vip.xpf</groupId>
+            <artifactId>api</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
 
-        <finalName>web-demo</finalName>
+        <finalName>logic</finalName>
 
         <resources>
             <resource>

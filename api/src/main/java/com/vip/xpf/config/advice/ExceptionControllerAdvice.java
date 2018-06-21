@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import com.vip.xpf.controller.ApiResponse;
-import com.vip.xpf.exception.XpfParamsException;
-import com.vip.xpf.exception.XpfRunTimeException;
-import com.vip.xpf.exception.XpfException;
+import com.vip.xpf.common.exception.XpfParamsException;
+import com.vip.xpf.common.exception.XpfRunTimeException;
+import com.vip.xpf.common.exception.XpfException;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -1,4 +1,4 @@
-package com.vip.xpf.exception;
+package com.vip.xpf.common.exception;
 
 public class XpfException extends Exception {
 
