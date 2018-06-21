@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    active: dev
+
+#mybatis config begin
+mybatis:
+  mapper_locations: classpath:mapper/*.xml
+  type_aliases_package: com.vip.xpf.model
+  configuration:
+    cache_enabled: false
+    map_underscore_to_camel_case: true
+
+mapper:
+  mappers: com.vip.xpf.dao.common.ConditionsQueryMapper
+
+#mybatis config end
+
+---
+#DataSource config begin
+spring:
+  profiles: dev
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver_class_name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/mydb?autoReconnect=true&autoReconnectForPools=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 5000
+
+#DataSource config end
