@@ -1,4 +1,4 @@
-package com.vip.xpf.config.advice;
+package com.vip.xpf.config;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.DeserializationFeature;

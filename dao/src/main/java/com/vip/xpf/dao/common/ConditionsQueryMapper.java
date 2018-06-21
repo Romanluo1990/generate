@@ -6,7 +6,6 @@ import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
-
 public interface ConditionsQueryMapper<E> extends Mapper<E> {
 
     @SelectProvider(type = ConditionsSelectProvider.class, method = "dynamicSQL")

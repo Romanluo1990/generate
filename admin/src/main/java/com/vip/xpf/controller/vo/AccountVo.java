@@ -13,7 +13,6 @@ public class AccountVo {
         this.account = account;
     }
 
-
     public Long getId() {
         return account.getId();
     }
