@@ -9,11 +9,17 @@ mybatis:
   configuration:
     cache_enabled: false
     map_underscore_to_camel_case: true
-
+#mybatis config end
 mapper:
   mappers: com.vip.xpf.dao.common.ConditionsQueryMapper
 
-#mybatis config end
+swagger:
+  enabled: true
+  title: logic api文档
+  description: logic api文档
+  version: 1.0.0
+  basePackage: com.vip.xpf.controller
+
 
 ---
 #DataSource config begin

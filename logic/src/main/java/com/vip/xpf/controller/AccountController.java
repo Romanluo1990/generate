@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(description = "用户接口")
+@Api("用户接口")
 @RestController
 @RequestMapping("account")
 public class AccountController extends BaseController<AccountService> {

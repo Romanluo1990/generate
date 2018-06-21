@@ -129,17 +129,11 @@
                 <scope>test</scope>
             </dependency>
 
-            <!-- Swagger -->
+            <!-- https://mvnrepository.com/artifact/com.didispace/spring-boot-starter-swagger -->
             <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>2.6.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>2.6.0</version>
+                <groupId>com.didispace</groupId>
+                <artifactId>spring-boot-starter-swagger</artifactId>
+                <version>1.4.1.RELEASE</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/ma.glasnost.orika/orika-core -->

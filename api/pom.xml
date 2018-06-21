@@ -28,15 +28,9 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Swagger -->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
+            <groupId>com.didispace</groupId>
+            <artifactId>spring-boot-starter-swagger</artifactId>
         </dependency>
     </dependencies>
 
