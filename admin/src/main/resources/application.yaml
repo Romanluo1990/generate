@@ -11,8 +11,10 @@ mybatis:
     map_underscore_to_camel_case: true
 #mybatis config end
 
+#mapper config begin
 mapper:
   mappers: com.vip.xpf.dao.common.ConditionsQueryMapper
+#mapper config end
 
 swagger:
   enabled: true
