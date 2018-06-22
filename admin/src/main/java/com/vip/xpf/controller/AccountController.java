@@ -3,9 +3,9 @@ package com.vip.xpf.controller;
 import com.github.pagehelper.PageInfo;
 import com.vip.xpf.common.util.PageUtils;
 import com.vip.xpf.controller.form.AccountForm;
+import com.vip.xpf.controller.vo.AccountVo;
 import com.vip.xpf.dao.common.PageSelect;
 import com.vip.xpf.dao.common.SelectCondition;
-import com.vip.xpf.logic.vo.AccountVo;
 import com.vip.xpf.service.AccountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(description = "用户接口")
+@Api("用户接口")
 @RestController
 @RequestMapping("account")
 public class AccountController extends BaseController<AccountService> {

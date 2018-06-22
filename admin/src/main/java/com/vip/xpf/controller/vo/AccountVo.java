@@ -1,4 +1,4 @@
-package com.vip.xpf.logic.vo;
+package com.vip.xpf.controller.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vip.xpf.model.Account;
