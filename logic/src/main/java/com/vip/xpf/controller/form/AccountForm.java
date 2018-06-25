@@ -1,55 +1,25 @@
 package com.vip.xpf.controller.form;
 
-import com.vip.xpf.model.Account;
-import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
+@Data
 public class AccountForm {
 
-    @ApiModelProperty(hidden = true)
-    private Account account = new Account();
+	private Long id;
 
-    public void setId(Long id) {
-        account.setId(id);
-    }
+	private String openId;
 
-    public void setOpenId(String openId) {
-        account.setOpenId(openId);
-    }
+	private String nickName;
 
-    @ApiModelProperty(name="昵称",example = "张三")
-    public void setNickName(String nickName) {
-        account.setNickName(nickName);
-    }
+	private String image;
 
-    public void setImage(String image) {
-        account.setImage(image);
-    }
+	private String phone;
 
-    public void setPhone(String phone) {
-        account.setPhone(phone);
-    }
+	private Integer type;
 
-    public void setType(Integer type) {
-        account.setType(type);
-    }
+	private Integer status;
 
-    public void setStatus(Integer status) {
-        account.setStatus(status);
-    }
+	private String statusMessage;
 
-    public void setStatusMessage(String statusMessage) {
-        account.setStatusMessage(statusMessage);
-    }
-
-    public void setUserName(String userName) {
-        account.setUserName(userName);
-    }
-
-    public void setPassword(String password) {
-        account.setPassword(password);
-    }
-
-    public Account getAccount() {
-        return account;
-    }
+	private String userName;
 }

@@ -16,6 +16,7 @@
         <module>admin</module>
         <module>logic</module>
         <module>api</module>
+        <module>generate</module>
     </modules>
 
     <properties>
@@ -142,6 +143,14 @@
                 <artifactId>orika-core</artifactId>
                 <version>1.5.2</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>25.1-jre</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

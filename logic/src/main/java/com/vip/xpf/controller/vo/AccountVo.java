@@ -1,53 +1,23 @@
 package com.vip.xpf.controller.vo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.vip.xpf.model.Account;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
+@Data
 public class AccountVo {
 
-    @JsonIgnore
-    private Account account = new Account();
+	private Long id;
 
-    public AccountVo(Account account) {
-        this.account = account;
-    }
+	private String openId;
 
+	@ApiModelProperty(name = "昵称", example = "张三")
+	private String nickName;
 
-    public Long getId() {
-        return account.getId();
-    }
+	private String image;
 
-    public String getOpenId() {
-        return account.getOpenId();
-    }
+	private String phone;
 
-    @ApiModelProperty(name="昵称",example = "张三")
-    public String getNickName() {
-        return account.getNickName();
-    }
+	private Integer type;
 
-    public String getImage() {
-        return account.getImage();
-    }
-
-    public String getPhone() {
-        return account.getPhone();
-    }
-
-    public Integer getType() {
-        return account.getType();
-    }
-
-    public Integer getStatus() {
-        return account.getStatus();
-    }
-
-    public String getStatusMessage() {
-        return account.getStatusMessage();
-    }
-
-    public String getUserName() {
-        return account.getUserName();
-    }
+	private String userName;
 }
