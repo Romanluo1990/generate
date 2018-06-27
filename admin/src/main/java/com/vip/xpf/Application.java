@@ -19,18 +19,18 @@ import javax.servlet.ServletContext;
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
 
-  @Override
-  protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-    return builder.sources(getClass());
-  }
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(getClass());
+	}
 
-  @Override
-  protected WebApplicationContext createRootApplicationContext(ServletContext servletContext) {
-    System.setProperty("spring.jndi.ignore", "true");
-    return super.createRootApplicationContext(servletContext);
-  }
+	@Override
+	protected WebApplicationContext createRootApplicationContext(ServletContext servletContext) {
+		System.setProperty("spring.jndi.ignore", "true");
+		return super.createRootApplicationContext(servletContext);
+	}
 
-  public static void main(String[] args) {
-    SpringApplication.run(Application.class, args);
-  }
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
 }

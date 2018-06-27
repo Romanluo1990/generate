@@ -1,4 +1,4 @@
-package com.vip.xpf.controller;
+package com.vip.xpf.logic.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.vip.xpf.api.common.manager.VersionManager;
