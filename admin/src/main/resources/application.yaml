@@ -13,7 +13,7 @@ mybatis:
 
 #mapper config begin
 mapper:
-  mappers: com.vip.xpf.dao.common.ConditionsQueryMapper
+  mappers: com.vip.xpf.dao.common.sql.ConditionsQueryMapper
 #mapper config end
 
 swagger:

@@ -2,8 +2,8 @@ package com.vip.xpf.service;
 
 import com.github.pagehelper.PageInfo;
 import com.vip.xpf.dao.AccountDao;
-import com.vip.xpf.dao.common.PageSelect;
-import com.vip.xpf.dao.common.SelectCondition;
+import com.vip.xpf.dao.common.sql.PageSelect;
+import com.vip.xpf.dao.common.sql.SelectCondition;
 import com.vip.xpf.model.Account;
 import org.springframework.stereotype.Service;
 

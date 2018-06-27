@@ -1,7 +1,7 @@
 package com.vip.xpf.dao.impl;
 
 import com.vip.xpf.dao.BaseDao;
-import com.vip.xpf.dao.common.ConditionsQueryMapper;
+import com.vip.xpf.dao.common.sql.ConditionsQueryMapper;
 import com.vip.xpf.model.Identity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

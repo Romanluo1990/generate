@@ -3,6 +3,7 @@ package com.vip.xpf.dao.impl;
 import com.vip.xpf.dao.AccountDao;
 import com.vip.xpf.dao.mapper.AccountMapper;
 import com.vip.xpf.model.Account;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.entity.Example;
 
@@ -18,4 +19,9 @@ public class AccountDaoImpl extends PageDaoImpl<AccountMapper, Account> implemen
 		return mapper.selectByExample(example);
 	}
 
+	@Cacheable(value = "Account", key = "'id_'+#id")
+	@Override
+	public Account getById(long id) {
+		return super.getById(id);
+	}
 }

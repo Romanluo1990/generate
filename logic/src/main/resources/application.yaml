@@ -9,22 +9,25 @@ mybatis:
   configuration:
     cache_enabled: false
     map_underscore_to_camel_case: true
-#mybatis config end
-mapper:
-  mappers: com.vip.xpf.dao.common.ConditionsQueryMapper
 
+mapper:
+  mappers: com.vip.xpf.dao.common.sql.ConditionsQueryMapper
+#mybatis config end
+
+#swagger config begin
 swagger:
   enabled: true
   title: logic api文档
   description: logic api文档
   version: 1.0.0
   basePackage: com.vip.xpf.controller
-
+#swagger config end
 
 ---
-#DataSource config begin
+
 spring:
   profiles: dev
+  #DataSource config begin
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver_class_name: com.mysql.jdbc.Driver
@@ -35,6 +38,15 @@ spring:
     minIdle: 5
     maxActive: 20
     maxWait: 5000
+  #DataSource config end
 
+  #redis config begin
+  redis:
+    host: localhost
+    port: 6379
+  cache:
+    redis:
+      #默认过期时间（毫秒）
+      time_to_live: 300000
+  #redis config end
 
-#DataSource config end
