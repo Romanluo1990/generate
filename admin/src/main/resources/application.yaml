@@ -21,7 +21,7 @@ swagger:
   title: logic api文档
   description: logic api文档
   version: 1.0.0
-  basePackage: com.vip.xpf.controller
+  basePackage: com.vip.xpf.admin.controller
 
 ---
 #DataSource config begin
