@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.CacheErrorHandler;
-import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -17,7 +16,7 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.lang.Nullable;
 
 @Configuration
-@EnableCaching(mode = AdviceMode.ASPECTJ)
+@EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
 
 	@Bean
