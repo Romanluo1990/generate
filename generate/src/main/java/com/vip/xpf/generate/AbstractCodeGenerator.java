@@ -1,4 +1,4 @@
-package om.vip.xpf.generate;
+package com.vip.xpf.generate;
 
 import com.google.common.base.CaseFormat;
 import freemarker.template.Template;

@@ -1,4 +1,4 @@
-package om.vip.xpf.generate;
+package com.vip.xpf.generate;
 
 import java.sql.DatabaseMetaData;
 
