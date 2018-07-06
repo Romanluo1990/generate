@@ -22,7 +22,7 @@ public class PageUtils {
 		dest.setTotal(orig.getTotal());
 		dest.setPages(orig.getPages());
 		dest.setFirstPage(orig.getFirstPage());
-		dest.setPrePage(orig.getFirstPage());
+		dest.setPrePage(orig.getPrePage());
 		dest.setNextPage(orig.getNextPage());
 		dest.setLastPage(orig.getLastPage());
 		dest.setHasPreviousPage(orig.isHasPreviousPage());

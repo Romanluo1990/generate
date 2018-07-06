@@ -10,6 +10,7 @@ import com.vip.xpf.dao.common.sql.SelectCondition;
 import com.vip.xpf.logic.controller.form.AccountForm;
 import com.vip.xpf.logic.controller.vo.AccountVo;
 import com.vip.xpf.model.Account;
+import com.vip.xpf.search.searcher.AccountSearcher;
 import com.vip.xpf.service.AccountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -17,12 +18,16 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Api("用户接口")
 @RestController
 @RequestMapping("account")
 public class AccountController extends BaseController<AccountService> {
+
+	@Resource
+	private AccountSearcher accountSearcher;
 
 	@PostMapping
 	@ApiOperation(value = "增加或修改用户信息", notes = "有id更新，无id新增")
@@ -53,7 +58,13 @@ public class AccountController extends BaseController<AccountService> {
 	@ApiImplicitParam(name = "conditions", value = "查询条件,exapmle:[{\"fieldName\": \"id\",\"operator\": \"EQ\",\"value\":\"1\"}]", dataType = "String", paramType = "query")
 	public PageInfo<AccountVo> pageByConditions(@ModelAttribute PageSelect pageSelect,
 			List<SelectCondition> conditions) {
-		return PageUtils.convert(service.pageByConditions(pageSelect, conditions), AccountVo.class);
+		return PageUtils.convert(accountSearcher.search(pageSelect, conditions), AccountVo.class);
+	}
+
+	@GetMapping("initIndex")
+	@ApiOperation("初始化索引")
+	public void initIndex() {
+		accountSearcher.importAll();
 	}
 
 	@GetMapping("version")

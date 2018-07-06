@@ -8,6 +8,7 @@ public interface Identity {
 
 	void setId(Long id);
 
+
 	void setCreateTime(Date createTime);
 
 	Date getCreateTime();

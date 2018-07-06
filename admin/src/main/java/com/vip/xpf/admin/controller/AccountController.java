@@ -50,6 +50,6 @@ public class AccountController extends BaseController<AccountService> {
 	@ApiImplicitParam(name = "conditions", value = "查询条件,exapmle:[{\"fieldName\": \"id\",\"operator\": \"EQ\",\"value\":\"1\"}]", dataType = "String", paramType = "query")
 	public PageInfo<AccountVo> pageByConditions(@ModelAttribute PageSelect pageSelect,
 			List<SelectCondition> conditions) {
-		return PageUtils.convert(service.pageByConditions(pageSelect, conditions), AccountVo::new);
+		return PageUtils.convert(service.searche(pageSelect, conditions), AccountVo::new);
 	}
 }

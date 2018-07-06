@@ -7,4 +7,6 @@ import java.util.List;
 public interface AccountDao extends PageDao<Account> {
 
 	List<Account> listByName(String name);
+
+	List<Account> listById(long id, int size);
 }

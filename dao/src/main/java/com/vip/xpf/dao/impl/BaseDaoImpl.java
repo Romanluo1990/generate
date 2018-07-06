@@ -26,6 +26,9 @@ public class BaseDaoImpl<M extends ConditionsQueryMapper<E>, E extends Identity>
 
 	@Override
 	public boolean deleteById(long id) {
+		E e = createEntity();
+		e.setId(id);
+
 		return mapper.deleteByPrimaryKey(id) == 1;
 	}
 
