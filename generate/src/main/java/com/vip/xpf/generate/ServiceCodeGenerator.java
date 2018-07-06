@@ -1,44 +1,38 @@
-package om.vip.xpf.generate;
+package com.vip.xpf.generate;
 
-import freemarker.template.TemplateException;
-
-import java.io.IOException;
 import java.sql.DatabaseMetaData;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class DaoCodeGenerator extends AbstractCodeGenerator {
+public class ServiceCodeGenerator extends AbstractCodeGenerator {
 
-	private final DaoImplCodeGenerator daoImplCodeGenerator;
-
-	private DaoCodeGenerator(DatabaseMetaData databaseMetaData, PackageBean packageBean, String tableName,
+	private ServiceCodeGenerator(DatabaseMetaData databaseMetaData, PackageBean packageBean, String tableName,
 			String codeDir, String author) {
 		super(databaseMetaData, packageBean, tableName, codeDir, author);
-		daoImplCodeGenerator = DaoImplCodeGenerator.build(databaseMetaData, packageBean, tableName, codeDir, author);
 	}
 
 	@Override
 	protected List<Consumer<Map<String, Object>>> getfreeMarkerDataCompleters() {
 		List<Consumer<Map<String, Object>>> completers = new LinkedList<>();
 		List<String> imports = new LinkedList<>();
-		imports.add(packageBean.getModelPackage() + "." + getClassName());
+		imports.add(packageBean.getDaoPackage() + "." + getClassName() + "Dao");
 		completers.add(importsCompleter(imports));
 		return completers;
 	}
 
 	@Override
 	protected String getFileSuffix() {
-		return "Dao.java";
+		return "Service.java";
 	}
 
 	@Override
 	protected String getTemplateName() {
-		return "Dao.ftl";
+		return "Service.ftl";
 	}
 
 	@Override
 	protected String getBasePackage() {
-		return packageBean.getDaoPackage();
+		return packageBean.getServicePackage();
 	}
 
 	private Consumer<Map<String, Object>> importsCompleter(List<String> imports) {
@@ -52,14 +46,8 @@ public class DaoCodeGenerator extends AbstractCodeGenerator {
 		};
 	}
 
-	@Override
-	public void generate() throws IOException, TemplateException {
-		super.generate();
-		daoImplCodeGenerator.generate();
-	}
-
-	public static DaoCodeGenerator build(DatabaseMetaData metaData, PackageBean packageBean, String tableName,
+	public static ServiceCodeGenerator build(DatabaseMetaData metaData, PackageBean packageBean, String tableName,
 			String modelDir, String author) {
-		return new DaoCodeGenerator(metaData, packageBean, tableName, modelDir, author);
+		return new ServiceCodeGenerator(metaData, packageBean, tableName, modelDir, author);
 	}
 }

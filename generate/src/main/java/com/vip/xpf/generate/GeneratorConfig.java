@@ -1,4 +1,4 @@
-package om.vip.xpf.generate;
+package com.vip.xpf.generate;
 
 import com.vip.xpf.common.util.bean.BeanUtils;
 import lombok.Data;

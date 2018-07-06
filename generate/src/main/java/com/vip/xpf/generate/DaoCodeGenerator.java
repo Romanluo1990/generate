@@ -1,14 +1,20 @@
-package om.vip.xpf.generate;
+package com.vip.xpf.generate;
 
+import freemarker.template.TemplateException;
+
+import java.io.IOException;
 import java.sql.DatabaseMetaData;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class ControllerCodeGenerator extends AbstractCodeGenerator {
+public class DaoCodeGenerator extends AbstractCodeGenerator {
 
-	private ControllerCodeGenerator(DatabaseMetaData databaseMetaData, PackageBean packageBean, String tableName,
+	private final DaoImplCodeGenerator daoImplCodeGenerator;
+
+	private DaoCodeGenerator(DatabaseMetaData databaseMetaData, PackageBean packageBean, String tableName,
 			String codeDir, String author) {
 		super(databaseMetaData, packageBean, tableName, codeDir, author);
+		daoImplCodeGenerator = DaoImplCodeGenerator.build(databaseMetaData, packageBean, tableName, codeDir, author);
 	}
 
 	@Override
@@ -16,26 +22,23 @@ public class ControllerCodeGenerator extends AbstractCodeGenerator {
 		List<Consumer<Map<String, Object>>> completers = new LinkedList<>();
 		List<String> imports = new LinkedList<>();
 		imports.add(packageBean.getModelPackage() + "." + getClassName());
-		imports.add(packageBean.getVoPackage() + "." + getClassName() + "Vo");
-		imports.add(packageBean.getFormPackage() + "." + getClassName() + "Form");
-		imports.add(packageBean.getServicePackage() + "." + getClassName() + "Service");
 		completers.add(importsCompleter(imports));
 		return completers;
 	}
 
 	@Override
 	protected String getFileSuffix() {
-		return "Controller.java";
+		return "Dao.java";
 	}
 
 	@Override
 	protected String getTemplateName() {
-		return "Controller.ftl";
+		return "Dao.ftl";
 	}
 
 	@Override
 	protected String getBasePackage() {
-		return packageBean.getControllerPackage();
+		return packageBean.getDaoPackage();
 	}
 
 	private Consumer<Map<String, Object>> importsCompleter(List<String> imports) {
@@ -49,8 +52,14 @@ public class ControllerCodeGenerator extends AbstractCodeGenerator {
 		};
 	}
 
-	public static ControllerCodeGenerator build(DatabaseMetaData metaData, PackageBean packageBean, String tableName,
+	@Override
+	public void generate() throws IOException, TemplateException {
+		super.generate();
+		daoImplCodeGenerator.generate();
+	}
+
+	public static DaoCodeGenerator build(DatabaseMetaData metaData, PackageBean packageBean, String tableName,
 			String modelDir, String author) {
-		return new ControllerCodeGenerator(metaData, packageBean, tableName, modelDir, author);
+		return new DaoCodeGenerator(metaData, packageBean, tableName, modelDir, author);
 	}
 }
