@@ -1,0 +1,32 @@
+PUT /xpf
+{
+    "settings": {
+        "analysis": {
+            "analyzer": {
+                "chinese_analyzer_index": {
+                    "type":         "custom",
+                    "tokenizer":    "ik_max_word",
+                    "filter":       ["pinyin_filter","pinyin_ngram"]
+                },
+                "chinese_analyzer_query": {
+                    "type":         "custom",
+                    "tokenizer":    "ik_smart",
+                    "filter":       ["pinyin_filter","pinyin_ngram"]
+                }
+            },
+            "filter" : {
+                "pinyin_filter" : {
+                    "type" : "pinyin",
+                    "keep_first_letter" : true,
+                    "keep_original" : true,
+                    "keep_full_pinyin" : false,
+                    "keep_joined_full_pinyin" : true,
+                    "limit_first_letter_length" : 10,
+                    "lowercase" : true,
+                    "trim_whitespace" : true
+                }
+            }
+      }
+    }
+
+}
