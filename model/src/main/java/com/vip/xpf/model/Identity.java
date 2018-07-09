@@ -8,6 +8,9 @@ public interface Identity {
 
 	void setId(Long id);
 
+	Boolean getIsDeleted();
+
+	void setIsDeleted(Boolean isDeleted);
 
 	void setCreateTime(Date createTime);
 

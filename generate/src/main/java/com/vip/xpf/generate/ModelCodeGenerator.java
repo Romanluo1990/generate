@@ -67,7 +67,9 @@ public class ModelCodeGenerator extends AbstractCodeGenerator {
 					columnInfo.setPropertyName(
 							CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, columnInfo.getColumnName()));
 					Class javaType = toJavaType(columnResultSet.getString("TYPE_NAME"),
-							columnResultSet.getInt("COLUMN_SIZE"));
+							columnInfo.getColumnName().equals("is_deleted") ?
+									1 :
+									columnResultSet.getInt("COLUMN_SIZE"));
 					if (!javaType.getName().startsWith("java.lang")) {
 						imports.add(javaType.getName());
 					}
@@ -94,6 +96,7 @@ public class ModelCodeGenerator extends AbstractCodeGenerator {
 				javaType = Integer.class;
 				break;
 			case "BIGINT":
+			case "BIGINT UNSIGNED":
 				javaType = Long.class;
 				break;
 			case "DECIMAL":

@@ -1,6 +1,6 @@
 package ${package};
 
-import com.vip.xpf.dao.common.ConditionsQueryMapper;
+import com.vip.xpf.dao.common.sql.ConditionsQueryMapper;
 <#list imports as import>
 import ${import};
 </#list>

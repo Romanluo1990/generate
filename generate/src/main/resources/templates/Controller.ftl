@@ -4,6 +4,7 @@ package ${package};;
 import ${import};
 </#list>
 
+import com.vip.xpf.api.controller.BaseController;
 import com.vip.xpf.common.util.bean.BeanUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 
 /**
 <#if (tableInfo.comment)??>
-* @desc：${tableInfo.comment}Service
+ * @desc：${tableInfo.comment}Controller
 <#else >
-*
+ *
 </#if>
-* @author ${author}
-* @date ${date}
-*/
+ * @author ${author}
+ * @date ${date}
+ */
 @Api("${tableInfo.comment}接口")
 @RestController
 @RequestMapping("${tableInfo.className?uncap_first}")
