@@ -14,7 +14,7 @@ import java.util.Objects;
 @Component
 public class PageAspect {
 
-	@Before("this(com.vip.xpf.dao.Dao) && args(pageSelect,..)")
+	@Before("this(com.vip.xpf.dao.common.Dao) && args(pageSelect,..)")
 	public void setPage(PageSelect pageSelect) {
 		PageHelper.orderBy(pageSelect.getOrderByString());
 		Boolean isCount = pageSelect.getCount();

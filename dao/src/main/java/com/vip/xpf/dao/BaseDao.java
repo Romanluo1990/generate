@@ -1,8 +1,9 @@
 package com.vip.xpf.dao;
 
+import com.vip.xpf.dao.common.Dao;
 import com.vip.xpf.model.Identity;
 
-public interface BaseDao<E extends Identity> extends Dao{
+public interface BaseDao<E extends Identity> extends Dao {
 
     /**
      * 保存

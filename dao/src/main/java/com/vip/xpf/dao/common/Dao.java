@@ -1,4 +1,4 @@
-package com.vip.xpf.dao;
+package com.vip.xpf.dao.common;
 
 /**
  * dao层标识接口
