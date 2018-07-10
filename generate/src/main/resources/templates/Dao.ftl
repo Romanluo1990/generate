@@ -15,5 +15,4 @@ import ${import};
  */
 public interface ${tableInfo.className}Dao extends BaseDao<${tableInfo.className}> {
 
-
 }

@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
-
 /**
 <#if (tableInfo.comment)??>
  * @desc：${tableInfo.comment}Controller
@@ -28,8 +27,8 @@ public class ${tableInfo.className}Controller extends BaseController<${tableInfo
 
     @PostMapping
     @ApiOperation(value = "增加或修改${tableInfo.comment}", notes = "有id更新，无id新增")
-    public void saveOrUpdate(@RequestBody ${tableInfo.className}Form ${tableInfo.className}Form) {
-        service.saveOrUpdate(BeanUtils.map(${tableInfo.className}Form, ${tableInfo.className}.class));
+    public void saveOrUpdate(@RequestBody ${tableInfo.className}Form ${tableInfo.className?uncap_first}Form) {
+        service.saveOrUpdate(BeanUtils.map(${tableInfo.className?uncap_first}Form, ${tableInfo.className}.class));
     }
 
     @DeleteMapping("id_{id}")

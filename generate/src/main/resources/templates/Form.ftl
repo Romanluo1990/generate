@@ -24,5 +24,4 @@ public class ${tableInfo.className}Form{
     private ${columnInfo.propertyType} ${columnInfo.propertyName?uncap_first};
 
     </#list>
-
 }

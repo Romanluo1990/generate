@@ -16,5 +16,4 @@ import ${import};
  */
 public interface ${tableInfo.className}Mapper extends ConditionsQueryMapper<${tableInfo.className}> {
 
-
 }

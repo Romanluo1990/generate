@@ -37,5 +37,4 @@ public class ${tableInfo.className} implements Identity {
     private ${columnInfo.propertyType} ${columnInfo.propertyName?uncap_first};
 
     </#list>
-
 }
