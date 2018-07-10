@@ -6,6 +6,7 @@ import com.vip.xpf.model.*;
 import com.vip.xpf.search.indexmodel.SalePlanIndex;
 import com.vip.xpf.search.repository.SalePlanRepository;
 import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
  * @Date: 2018/7/9
  * @Description:
  */
+@Repository
 public class SalePlanSearcher extends AbstractSearcher<SalePlanRepository, SalePlanIndex, SalePlanDao, SalePlan>
 		implements ApplicationListener<ModifySalePlanEvent> {
 
@@ -44,6 +46,7 @@ public class SalePlanSearcher extends AbstractSearcher<SalePlanRepository, SaleP
 	@Override
 	protected SalePlanIndex toIndexData(SalePlan salePlan) {
 		SalePlanIndex salePlanIndex = new SalePlanIndex();
+		salePlanIndex.setId(salePlan.getId());
 		salePlanIndex.setName(salePlan.getName());
 		List<SalePlanProduct> salePlanProducts = salePlanProductDao.listByPlanId(salePlan.getId());
 		if (!salePlanProducts.isEmpty()) {
