@@ -17,5 +17,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class ${tableInfo.className}Service extends BaseService<${tableInfo.className}Dao> {
 
-
 }
