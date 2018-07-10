@@ -1,13 +1,17 @@
 package com.vip.xpf.dao.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.vip.xpf.dao.BaseDao;
 import com.vip.xpf.dao.common.sql.ConditionsQueryMapper;
 import com.vip.xpf.model.Identity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import tk.mybatis.mapper.entity.Example;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 public class BaseDaoImpl<M extends ConditionsQueryMapper<E>, E extends Identity> implements BaseDao<E> {
@@ -51,6 +55,27 @@ public class BaseDaoImpl<M extends ConditionsQueryMapper<E>, E extends Identity>
 	@Override
 	public E getById(long id) {
 		return mapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public List<E> listByIds(List<Long> ids) {
+		if (ids == null || ids.isEmpty()) {
+			return Collections.emptyList();
+		}
+		Example example = new Example(getEntityClass());
+		example.createCriteria().andIn("id", ids);
+		return mapper.selectByExample(example);
+	}
+
+	@Override
+	public List<E> listById(long fromId, int limit) {
+		Example example = new Example(getEntityClass());
+		if (fromId > 0) {
+			example.createCriteria().andLessThan("id", fromId);
+		}
+		PageHelper.offsetPage(0, limit, false);
+		PageHelper.orderBy("id desc");
+		return mapper.selectByExample(example);
 	}
 
 	@Override

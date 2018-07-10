@@ -9,4 +9,6 @@ public interface AccountDao extends PageDao<Account> {
 	List<Account> listByName(String name);
 
 	List<Account> listById(long id, int size);
+
+	List<Account> listByIds(List<Long> ids);
 }

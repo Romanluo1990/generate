@@ -10,7 +10,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  *
@@ -19,27 +18,16 @@ import java.util.List;
  * @Description:
  */
 @Repository
-public class AccountSearcher extends AbstractSearcher<AccountSearchRepository, AccountIndex, Account>
+public class AccountSearcher extends AbstractSearcher<AccountSearchRepository, AccountIndex, AccountDao, Account>
 		implements ApplicationListener<ModifyAccountEvent> {
 
 	@Resource
 	private AccountDao accountDao;
 
 	@Override
-	protected Account toSourceData(AccountIndex indexModel) {
-		return accountDao.getById(indexModel.getId());
-	}
-
-	@Override
 	protected AccountIndex toIndexData(Account sourceModel) {
 		return BeanUtils.map(sourceModel, AccountIndex.class);
 	}
-
-	@Override
-	List<Account> listSourceData(long id, int size) {
-		return accountDao.listById(id, size);
-	}
-
 
 	@Override
 	public void onApplicationEvent(ModifyAccountEvent event) {

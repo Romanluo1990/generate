@@ -9,5 +9,4 @@ import com.vip.xpf.model.SalePlan;
  */
 public interface SalePlanDao extends BaseDao<SalePlan> {
 
-
 }

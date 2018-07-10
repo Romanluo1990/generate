@@ -2,6 +2,7 @@ package com.vip.xpf.search.searcher;
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Streams;
+import com.vip.xpf.dao.BaseDao;
 import com.vip.xpf.dao.common.sql.PageSelect;
 import com.vip.xpf.dao.common.sql.SelectCondition;
 import com.vip.xpf.dao.common.sql.Symbol;
@@ -17,9 +18,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -28,10 +32,15 @@ import java.util.stream.Collectors;
  * @Date: 2018/6/28
  * @Description:
  */
-public abstract class AbstractSearcher<E extends ElasticsearchRepository<I, Long>, I extends IndexModel, S extends Identity> {
+public abstract class AbstractSearcher<E extends ElasticsearchRepository<I, Long>, I extends IndexModel, D extends BaseDao<S>, S extends Identity> {
 
 	@Autowired
 	private E esRepository;
+
+	@Autowired
+	protected D dao;
+
+	private Class sourceClassCache;
 
 	public PageInfo<S> search(QueryBuilder query, Pageable pageable) {
 		return toPageInfo(esRepository.search(query, pageable));
@@ -72,12 +81,16 @@ public abstract class AbstractSearcher<E extends ElasticsearchRepository<I, Long
 		dest.setLastPage(dest.getPages());
 		dest.setHasPreviousPage(dest.getPrePage() > 0);
 		dest.setHasNextPage(dest.getNextPage() < dest.getLastPage());
-		List<S> datas = page.getContent().parallelStream().map(this::toSourceData).collect(Collectors.toList());
-		dest.setList(datas);
+		dest.setList(toSourceData(page.getContent()));
 		return dest;
 	}
 
-	protected abstract S toSourceData(I indexData);
+	protected List<S> toSourceData(List<I> indexDatas) {
+		List<Long> ids = indexDatas.stream().collect(Collectors.mapping(IndexModel::getId, Collectors.toList()));
+		Map<Long, S> salePlanMap = dao.listByIds(ids).parallelStream()
+				.collect(Collectors.toMap(Identity::getId, Function.identity()));
+		return indexDatas.stream().map(IndexModel::getId).map(salePlanMap::get).collect(Collectors.toList());
+	}
 
 	protected abstract I toIndexData(S sourceData);
 
@@ -132,5 +145,15 @@ public abstract class AbstractSearcher<E extends ElasticsearchRepository<I, Long
 		}
 	}
 
-	abstract List<S> listSourceData(long id, int size);
+	protected List<S> listSourceData(long id, int size) {
+		return dao.listById(id, size);
+	}
+
+	protected Class<S> getEntityClass() {
+		if (sourceClassCache == null) {
+			ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
+			sourceClassCache = (Class) parameterizedType.getActualTypeArguments()[3];
+		}
+		return sourceClassCache;
+	}
 }

@@ -2,7 +2,7 @@ package com.vip.xpf.dao.impl.event;
 
 import com.vip.xpf.dao.common.sql.ModifyEntityEvent;
 import com.vip.xpf.dao.common.sql.ModifyEventType;
-import com.vip.xpf.model.SalePlan;
+import com.vip.xpf.model.Identity;
 
 /**
  *
@@ -11,9 +11,9 @@ import com.vip.xpf.model.SalePlan;
  * @Date: 2018/6/28
  * @Description:
  */
-public class ModifySalePlanEvent extends ModifyEntityEvent<SalePlan> {
+public class ModifySalePlanEvent extends ModifyEntityEvent {
 
-	public ModifySalePlanEvent(Object source, SalePlan entity, ModifyEventType modifyEventType) {
+	public ModifySalePlanEvent(Object source, Identity entity, ModifyEventType modifyEventType) {
 		super(source, entity, modifyEventType);
 	}
 }

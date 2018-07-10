@@ -2,13 +2,14 @@ package com.vip.xpf.dao.impl;
 
 import com.vip.xpf.dao.SalePlanProductDao;
 import com.vip.xpf.dao.common.sql.ModifyEventType;
-import com.vip.xpf.dao.impl.event.ModifySalePlanProductEvent;
+import com.vip.xpf.dao.impl.event.ModifySalePlanEvent;
 import com.vip.xpf.dao.mapper.SalePlanProductMapper;
 import com.vip.xpf.model.SalePlanProduct;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @desc：选品表Dao
@@ -23,11 +24,18 @@ public class SalePlanProductDaoImpl extends BaseDaoImpl<SalePlanProductMapper, S
 	private ApplicationContext applicationContext;
 
 	@Override
+	public List<SalePlanProduct> listByPlanId(long planId) {
+		SalePlanProduct salePlanProduct = new SalePlanProduct();
+		salePlanProduct.setPlanId(planId);
+		return mapper.select(salePlanProduct);
+	}
+
+	@Override
 	public boolean save(SalePlanProduct salePlanProduct) {
 		boolean result = super.save(salePlanProduct);
 		if (result) {
-			ModifySalePlanProductEvent salePlanProductEvent = new ModifySalePlanProductEvent(this,
-					getById(salePlanProduct.getId()), ModifyEventType.ADD);
+			ModifySalePlanEvent salePlanProductEvent = new ModifySalePlanEvent(this, getById(salePlanProduct.getId()),
+					ModifyEventType.ADD);
 			applicationContext.publishEvent(salePlanProductEvent);
 		}
 		return result;
@@ -37,7 +45,7 @@ public class SalePlanProductDaoImpl extends BaseDaoImpl<SalePlanProductMapper, S
 	public boolean deleteById(long id) {
 		boolean result = super.deleteById(id);
 		if (result) {
-			ModifySalePlanProductEvent salePlanProductEvent = new ModifySalePlanProductEvent(this, getById(id),
+			ModifySalePlanEvent salePlanProductEvent = new ModifySalePlanEvent(this, getById(id),
 					ModifyEventType.DELETE);
 			applicationContext.publishEvent(salePlanProductEvent);
 		}
@@ -48,8 +56,8 @@ public class SalePlanProductDaoImpl extends BaseDaoImpl<SalePlanProductMapper, S
 	public boolean updateById(SalePlanProduct salePlanProduct) {
 		boolean result = super.updateById(salePlanProduct);
 		if (result) {
-			ModifySalePlanProductEvent salePlanProductEvent = new ModifySalePlanProductEvent(this,
-					getById(salePlanProduct.getId()), ModifyEventType.UPDATE);
+			ModifySalePlanEvent salePlanProductEvent = new ModifySalePlanEvent(this, getById(salePlanProduct.getId()),
+					ModifyEventType.UPDATE);
 			applicationContext.publishEvent(salePlanProductEvent);
 		}
 		return result;
@@ -59,8 +67,8 @@ public class SalePlanProductDaoImpl extends BaseDaoImpl<SalePlanProductMapper, S
 	public boolean updateByIdSelective(SalePlanProduct salePlanProduct) {
 		boolean result = super.updateByIdSelective(salePlanProduct);
 		if (result) {
-			ModifySalePlanProductEvent salePlanProductEvent = new ModifySalePlanProductEvent(this,
-					getById(salePlanProduct.getId()), ModifyEventType.UPDATE);
+			ModifySalePlanEvent salePlanProductEvent = new ModifySalePlanEvent(this, getById(salePlanProduct.getId()),
+					ModifyEventType.UPDATE);
 			applicationContext.publishEvent(salePlanProductEvent);
 		}
 		return result;

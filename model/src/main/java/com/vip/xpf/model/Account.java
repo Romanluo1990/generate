@@ -8,51 +8,58 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Data
-public class Account implements Identity{
+public class Account implements Identity {
 
-    @Id
-    @GeneratedValue(generator = "JDBC")
-    private Long id;
+	@Id
+	@GeneratedValue(generator = "JDBC")
+	private Long id;
 
-    @Column(name = "open_id")
-    private String openId;
+	@Column(name = "open_id")
+	private String openId;
 
-    @Column(name = "nick_name")
-    private String nickName;
+	@Column(name = "nick_name")
+	private String nickName;
 
-    private String image;
+	private String image;
 
-    @Column(name = "phone")
-    private String phone;
+	@Column(name = "phone")
+	private String phone;
 
-    @Column(name = "type")
-    private Integer type;
+	@Column(name = "type")
+	private Integer type;
 
-    /**
-     * 状态（0:待审核 1:审核通过 2:审核不通过）
-     */
-    private Integer status;
+	/**
+	 * 状态（0:待审核 1:审核通过 2:审核不通过）
+	 */
+	private Integer status;
 
-    /**
-     * 审核信息
-     */
-    private String statusMessage;
+	/**
+	 * 审核信息
+	 */
+	private String statusMessage;
 
-    @Column(name = "user_name")
-    private String userName;
+	@Column(name = "user_name")
+	private String userName;
 
-    private String password;
+	private String password;
 
-    private String salt;
+	private String salt;
 
-    @Column(name = "create_time")
-    private Date createTime;
+	@Column(name = "create_time")
+	private Date createTime;
 
-    private String creator;
+	private String creator;
 
-    @Column(name = "update_time")
-    private Date updateTime;
+	@Column(name = "update_time")
+	private Date updateTime;
 
-    private String updator;
+	/**
+	 *是否已删除(0:否,1:是)
+	 */
+	@Column(name = "`is_deleted`")
+	private Boolean isDeleted;
+
+
+	private String updator;
 
 }
