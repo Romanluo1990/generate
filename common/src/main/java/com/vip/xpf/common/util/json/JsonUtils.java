@@ -1,4 +1,4 @@
-package com.vip.xpf.common.util.bean.json;
+package com.vip.xpf.common.util.json;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;

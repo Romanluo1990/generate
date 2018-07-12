@@ -2,7 +2,7 @@ package com.vip.xpf.esplug.pyngram;
 
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.tokenattributes.*;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 
 import java.io.IOException;
 
@@ -23,10 +23,6 @@ public final class PinyinNGramTokenFilter extends TokenFilter {
 	private int curGramSize;
 
 	private final CharTermAttribute termAtt = addAttribute(CharTermAttribute.class);
-	private final OffsetAttribute offsetAtt = addAttribute(OffsetAttribute.class);
-	private final PositionIncrementAttribute posIncrAtt = addAttribute(PositionIncrementAttribute.class);
-	private final PositionLengthAttribute posLenAtt = addAttribute(PositionLengthAttribute.class);
-	private final TypeAttribute typeAtt = addAttribute(TypeAttribute.class); // 类型属性
 
 	protected PinyinNGramTokenFilter(TokenStream input, PinyinNGramConfig pinyinNGramConfig) {
 		super(input);
@@ -44,14 +40,17 @@ public final class PinyinNGramTokenFilter extends TokenFilter {
 					curTermLength = termAtt.length();
 					curGramSize = pinyinNGramConfig.getMinGram();
 					endSize = Math.min(pinyinNGramConfig.getMaxGram(), curTermLength);
-				}
-			}
-			for (char c : curTermBuffer) {
-				if (isChinese(c)) {
-					curTermBuffer = null;
+					for (char c : curTermBuffer) {
+						if (isChinese(c)) {
+							curTermBuffer = null;
+							return true;
+						}
+					}
+					termAtt.copyBuffer(curTermBuffer, 0, curTermLength);
 					return true;
 				}
 			}
+
 			if (curGramSize <= endSize) {
 				termAtt.copyBuffer(curTermBuffer, 0, curGramSize);
 				curGramSize++;

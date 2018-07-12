@@ -5,6 +5,7 @@ import com.vip.xpf.api.common.manager.VersionManager;
 import com.vip.xpf.api.common.util.PageUtils;
 import com.vip.xpf.api.controller.BaseController;
 import com.vip.xpf.common.util.bean.BeanUtils;
+import com.vip.xpf.common.util.properties.PropertiesManager;
 import com.vip.xpf.dao.common.sql.PageSelect;
 import com.vip.xpf.dao.common.sql.SelectCondition;
 import com.vip.xpf.logic.controller.form.AccountForm;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Api("用户接口")
 @RestController
@@ -73,4 +75,13 @@ public class AccountController extends BaseController<AccountService> {
 	public String version() {
 		return VersionManager.getVersion();
 	}
+
+	@GetMapping("properties")
+	@ApiOperation("测试properties")
+	public String properties() {
+		return PropertiesManager.getProperties().entrySet().stream().
+				map(entry -> entry.getKey() + ":" + entry.getValue()).
+				collect(Collectors.joining(", "));
+	}
+
 }
