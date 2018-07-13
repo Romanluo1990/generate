@@ -7,6 +7,6 @@ import com.vip.xpf.model.SalePlan;
  * @author romanluo
  * @date 2018/07/09
  */
-public interface SalePlanDao extends BaseDao<SalePlan> {
+public interface SalePlanDao extends PageDao<SalePlan> {
 
 }

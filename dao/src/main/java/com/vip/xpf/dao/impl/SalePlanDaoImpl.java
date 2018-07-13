@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * @date 2018/07/09
  */
 @Repository
-public class SalePlanDaoImpl extends BaseDaoImpl<SalePlanMapper, SalePlan> implements SalePlanDao {
+public class SalePlanDaoImpl extends PageDaoImpl<SalePlanMapper, SalePlan> implements SalePlanDao {
 
 	@Resource
 	private ApplicationContext applicationContext;

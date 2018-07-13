@@ -5,7 +5,6 @@ import com.vip.xpf.dao.PageDao;
 import com.vip.xpf.dao.common.sql.ConditionsQueryMapper;
 import com.vip.xpf.dao.common.sql.PageSelect;
 import com.vip.xpf.dao.common.sql.SelectCondition;
-import com.vip.xpf.model.Account;
 import com.vip.xpf.model.Identity;
 
 import java.util.Collections;
@@ -15,12 +14,12 @@ public class PageDaoImpl<M extends ConditionsQueryMapper<E>, E extends Identity>
 		implements PageDao<E> {
 
 	@Override
-	public PageInfo<Account> page(PageSelect pageSelect) {
+	public PageInfo<E> page(PageSelect pageSelect) {
 		return pageByConditions(pageSelect, Collections.emptyList());
 	}
 
 	@Override
-	public PageInfo<Account> pageByConditions(PageSelect pageSelect, List<SelectCondition> conditions) {
+	public PageInfo<E> pageByConditions(PageSelect pageSelect, List<SelectCondition> conditions) {
 		return new PageInfo<>(mapper.listByConditions(conditions));
 	}
 

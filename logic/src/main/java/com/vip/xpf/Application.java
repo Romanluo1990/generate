@@ -1,6 +1,7 @@
 package com.vip.xpf;
 
 import com.didispace.swagger.EnableSwagger2Doc;
+import com.vip.xpf.search.EnableSearch;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +16,7 @@ import javax.servlet.ServletContext;
 @Slf4j
 @EnableWebMvc
 @EnableAsync
+@EnableSearch
 @EnableSwagger2Doc
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {

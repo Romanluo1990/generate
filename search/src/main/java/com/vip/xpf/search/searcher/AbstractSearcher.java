@@ -64,37 +64,35 @@ public abstract class AbstractSearcher<E extends ElasticsearchRepository<I, Long
 		esRepository.deleteAll();
 	}
 
-	private PageInfo<S> toPageInfo(Page<I> page) {
-		PageInfo<S> dest = new PageInfo<>();
-		Pageable pageable = page.getPageable();
-		dest.setPageNum(page.getNumber() + 1);
-		dest.setPageSize(pageable.getPageSize());
-		dest.setSize(page.getNumberOfElements());
-		dest.setOrderBy(pageable.getSort().toString());
-		dest.setStartRow((int) pageable.getOffset() + 1);
-		dest.setEndRow(dest.getStartRow() - 1 + dest.getSize());
-		dest.setTotal(page.getTotalElements());
-		dest.setPages(page.getTotalPages());
-		dest.setFirstPage(1);
-		dest.setPrePage(dest.getPageNum() - 1);
-		dest.setNextPage(dest.getPageNum() + 1);
-		dest.setLastPage(dest.getPages());
-		dest.setHasPreviousPage(dest.getPrePage() > 0);
-		dest.setHasNextPage(dest.getNextPage() < dest.getLastPage());
-		dest.setList(toSourceData(page.getContent()));
-		return dest;
+	public PageInfo<S> search(PageSelect pageSelect, List<SelectCondition> conditions) {
+		Sort sort = getSearchSort(pageSelect);
+		Pageable pageable = PageRequest.of(pageSelect.getPageNo() - 1, pageSelect.getPageSize(), sort);
+		BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+		conditions.forEach(buildQueryBuilder(queryBuilder));
+		return search(queryBuilder, pageable);
 	}
 
-	protected List<S> toSourceData(List<I> indexDatas) {
-		List<Long> ids = indexDatas.stream().collect(Collectors.mapping(IndexModel::getId, Collectors.toList()));
-		Map<Long, S> salePlanMap = dao.listByIds(ids).parallelStream()
-				.collect(Collectors.toMap(Identity::getId, Function.identity()));
-		return indexDatas.stream().map(IndexModel::getId).map(salePlanMap::get).collect(Collectors.toList());
+	public void importAll() {
+		long id = -1;
+		int size = 1000;
+		while (true) {
+			List<S> sourceDatas = listSourceData(id, size);
+			if (sourceDatas.isEmpty()) {
+				break;
+			}
+			saveAll(sourceDatas);
+			id = sourceDatas.get(sourceDatas.size() - 1).getId();
+		}
 	}
 
+	/**
+	 * 源数据转索引数据
+	 * @param sourceData
+	 * @return
+	 */
 	protected abstract I toIndexData(S sourceData);
 
-	public PageInfo<S> search(PageSelect pageSelect, List<SelectCondition> conditions) {
+	private Sort getSearchSort(PageSelect pageSelect) {
 		Sort sort;
 		if (pageSelect.getOrderByList() == null || pageSelect.getOrderByList().isEmpty()) {
 			sort = Sort.unsorted();
@@ -103,10 +101,7 @@ public abstract class AbstractSearcher<E extends ElasticsearchRepository<I, Long
 					.map(orderBy -> new Sort.Order(orderBy.getType() ? Sort.Direction.ASC : Sort.Direction.DESC,
 							orderBy.getName())).collect(Collectors.toList()));
 		}
-		Pageable pageable = PageRequest.of(pageSelect.getPageNo() - 1, pageSelect.getPageSize(), sort);
-		BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
-		conditions.forEach(buildQueryBuilder(queryBuilder));
-		return search(queryBuilder, pageable);
+		return sort;
 	}
 
 	private Consumer<SelectCondition> buildQueryBuilder(BoolQueryBuilder queryBuilder) {
@@ -132,24 +127,39 @@ public abstract class AbstractSearcher<E extends ElasticsearchRepository<I, Long
 		};
 	}
 
-	public void importAll() {
-		long id = -1;
-		int size = 1000;
-		while (true) {
-			List<S> sourceDatas = listSourceData(id, size);
-			if (sourceDatas.isEmpty()) {
-				break;
-			}
-			saveAll(sourceDatas);
-			id = sourceDatas.get(sourceDatas.size() - 1).getId();
-		}
+	private PageInfo<S> toPageInfo(Page<I> page) {
+		PageInfo<S> dest = new PageInfo<>();
+		Pageable pageable = page.getPageable();
+		dest.setPageNum(page.getNumber() + 1);
+		dest.setPageSize(pageable.getPageSize());
+		dest.setSize(page.getNumberOfElements());
+		dest.setOrderBy(pageable.getSort().toString());
+		dest.setStartRow((int) pageable.getOffset() + 1);
+		dest.setEndRow(dest.getStartRow() - 1 + dest.getSize());
+		dest.setTotal(page.getTotalElements());
+		dest.setPages(page.getTotalPages());
+		dest.setFirstPage(1);
+		dest.setPrePage(dest.getPageNum() - 1);
+		dest.setNextPage(dest.getPageNum() + 1);
+		dest.setLastPage(dest.getPages());
+		dest.setHasPreviousPage(dest.getPrePage() > 0);
+		dest.setHasNextPage(dest.getNextPage() < dest.getLastPage());
+		dest.setList(toSourceData(page.getContent()));
+		return dest;
 	}
 
-	protected List<S> listSourceData(long id, int size) {
+	private List<S> toSourceData(List<I> indexDatas) {
+		List<Long> ids = indexDatas.stream().collect(Collectors.mapping(IndexModel::getId, Collectors.toList()));
+		Map<Long, S> salePlanMap = dao.listByIds(ids).parallelStream()
+				.collect(Collectors.toMap(Identity::getId, Function.identity()));
+		return indexDatas.stream().map(IndexModel::getId).map(salePlanMap::get).collect(Collectors.toList());
+	}
+
+	private List<S> listSourceData(long id, int size) {
 		return dao.listById(id, size);
 	}
 
-	protected Class<S> getEntityClass() {
+	private Class<S> getEntityClass() {
 		if (sourceClassCache == null) {
 			ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
 			sourceClassCache = (Class) parameterizedType.getActualTypeArguments()[3];

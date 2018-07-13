@@ -56,7 +56,7 @@ public class SalePlanController extends BaseController<SalePlanService> {
 	@ApiOperation("分页查询")
 	@ApiImplicitParam(name = "conditions", value = "查询条件,exapmle:[{\"fieldName\": \"id\",\"operator\": \"EQ\",\"value\":\"1\"}]", dataType = "String", paramType = "query")
 	public PageInfo<SalePlanVo> page(@ModelAttribute PageSelect pageSelect, List<SelectCondition> conditions) {
-		return PageUtils.convert(salePlanSearcher.search(pageSelect, conditions), SalePlanVo.class);
+		return PageUtils.convert(service.search(pageSelect, conditions), SalePlanVo.class);
 	}
 
 }
