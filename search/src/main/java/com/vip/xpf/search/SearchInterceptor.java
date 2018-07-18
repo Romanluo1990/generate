@@ -53,7 +53,7 @@ public class SearchInterceptor implements MethodInterceptor {
 					filter(method -> {
 						boolean flag = true;
 						Class[] srcParameterTypes = srcMethod.getParameterTypes();
-						Class[] advisorParameterTypes = srcMethod.getParameterTypes();
+						Class[] advisorParameterTypes = method.getParameterTypes();
 						for (int i = 0; i < srcParameterTypes.length; i++) {
 							if (!srcParameterTypes[i].equals(advisorParameterTypes[i])) {
 								flag = false;
