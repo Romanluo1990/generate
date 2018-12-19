@@ -1,4 +1,4 @@
-package com.vip.xpf.generate;
+package com.vip.utils.generate;
 
 import com.google.common.base.CaseFormat;
 import freemarker.template.Template;
@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
 
 public abstract class AbstractCodeGenerator {
 
@@ -23,14 +24,18 @@ public abstract class AbstractCodeGenerator {
 
 	protected final String tableName;
 
+	private final String tableNamePrefix;
+
 	protected final PackageBean packageBean;
 
 	protected final String codeDir;
 
 	protected final String author;
 
-	public AbstractCodeGenerator(DatabaseMetaData databaseMetaData, PackageBean packageBean, String tableName,
+	public AbstractCodeGenerator(DatabaseMetaData databaseMetaData, PackageBean packageBean, String tableNamePrefix,
+			String tableName,
 			String codeDir, String author) {
+		this.tableNamePrefix = tableNamePrefix;
 		this.tableName = tableName;
 		this.codeDir = codeDir;
 		this.packageBean = packageBean;
@@ -42,7 +47,8 @@ public abstract class AbstractCodeGenerator {
 		List<Consumer<Map<String, Object>>> freeMarkerDataCompleters = getfreeMarkerDataCompleters();
 		freeMarkerDataCompleters.add(tableInfoCompleter());
 		Consumer<Map<String, Object>> consumer = freeMarkerDataCompleters.parallelStream()
-				.reduce(putCommonData(), (pre, next) -> pre.andThen(next));
+																		 .reduce(putCommonData(),
+																				 (pre, next) -> pre.andThen(next));
 		Map<String, Object> freeMarkerData = new HashMap<>();
 		consumer.accept(freeMarkerData);
 		generateFile(freeMarkerData);
@@ -85,13 +91,18 @@ public abstract class AbstractCodeGenerator {
 	 */
 	private void generateFile(Map<String, Object> freeMarkerData) throws IOException, TemplateException {
 		Template template = FreeMarkerTemplateUtils.getTemplate(getTemplateName());
-		String parentDir = codeDir + File.separator + getBasePackage().replace(".", File.separator);
+		String parentDir = codeDir + File.separator + getBasePackage().replaceAll("\\.", Matcher.quoteReplacement(File.separator));
+		File parentFile = new File(parentDir);
+		if (!parentFile.exists()) {
+			parentFile.mkdirs();
+		}
 		FileWriter fileWriter = new FileWriter(new File(parentDir, getClassName() + getFileSuffix()));
 		template.process(freeMarkerData, fileWriter);
 	}
 
 	protected String getClassName() {
-		return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, tableName);
+		return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, tableName
+				.replaceFirst(tableNamePrefix, ""));
 	}
 
 	/**

@@ -1,4 +1,4 @@
-package com.vip.xpf.generate;
+package com.vip.utils.generate;
 
 import java.sql.DatabaseMetaData;
 import java.util.LinkedList;
@@ -8,9 +8,10 @@ import java.util.function.Consumer;
 
 public class XmlCodeGenerator extends AbstractCodeGenerator {
 
-	private XmlCodeGenerator(DatabaseMetaData databaseMetaData, PackageBean packageBean, String tableName,
+	private XmlCodeGenerator(DatabaseMetaData databaseMetaData, PackageBean packageBean, String tableNamePrefix,
+			String tableName,
 			String codeDir, String author) {
-		super(databaseMetaData, packageBean, tableName, codeDir, author);
+		super(databaseMetaData, packageBean, tableNamePrefix, tableName, codeDir, author);
 	}
 
 	@Override
@@ -26,7 +27,7 @@ public class XmlCodeGenerator extends AbstractCodeGenerator {
 
 	@Override
 	protected String getFileSuffix() {
-		return ".xml";
+		return "Mapper.xml";
 	}
 
 	@Override
@@ -39,8 +40,9 @@ public class XmlCodeGenerator extends AbstractCodeGenerator {
 		return packageBean.getXmlPackage();
 	}
 
-	public static XmlCodeGenerator build(DatabaseMetaData metaData, PackageBean packageBean, String tableName,
+	public static XmlCodeGenerator build(DatabaseMetaData metaData, PackageBean packageBean, String tableNamePrefix,
+			String tableName,
 			String modelDir, String author) {
-		return new XmlCodeGenerator(metaData, packageBean, tableName, modelDir, author);
+		return new XmlCodeGenerator(metaData, packageBean, tableNamePrefix, tableName, modelDir, author);
 	}
 }

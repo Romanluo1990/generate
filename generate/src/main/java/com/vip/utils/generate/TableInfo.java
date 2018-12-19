@@ -1,4 +1,4 @@
-package com.vip.xpf.generate;
+package com.vip.utils.generate;
 
 import lombok.Data;
 

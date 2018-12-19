@@ -1,4 +1,4 @@
-package com.vip.xpf.generate;
+package com.vip.utils.generate;
 
 import com.google.common.base.CaseFormat;
 
@@ -11,9 +11,9 @@ import java.util.function.Consumer;
 
 public class ModelCodeGenerator extends AbstractCodeGenerator {
 
-	ModelCodeGenerator(DatabaseMetaData databaseMetaData, PackageBean packageBean, String tableName, String codeDir,
-			String author) {
-		super(databaseMetaData, packageBean, tableName, codeDir, author);
+	ModelCodeGenerator(DatabaseMetaData databaseMetaData, PackageBean packageBean, String tableNamePrefix,
+			String tableName, String codeDir, String author) {
+		super(databaseMetaData, packageBean, tableNamePrefix, tableName, codeDir, author);
 	}
 
 	@Override
@@ -139,8 +139,9 @@ public class ModelCodeGenerator extends AbstractCodeGenerator {
 		return javaType;
 	}
 
-	public static ModelCodeGenerator build(DatabaseMetaData metaData, PackageBean packageBean, String tableName,
+	public static ModelCodeGenerator build(DatabaseMetaData metaData, PackageBean packageBean, String tableNamePrefix,
+			String tableName,
 			String modelDir, String author) {
-		return new ModelCodeGenerator(metaData, packageBean, tableName, modelDir, author);
+		return new ModelCodeGenerator(metaData, packageBean, tableNamePrefix, tableName, modelDir, author);
 	}
 }

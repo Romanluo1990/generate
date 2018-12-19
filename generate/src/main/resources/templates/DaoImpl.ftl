@@ -15,6 +15,6 @@ import org.springframework.stereotype.Repository;
  * @date ${date}
  */
 @Repository
-public class ${tableInfo.className}DaoImpl extends BaseDaoImpl<${tableInfo.className}Mapper, ${tableInfo.className}> implements ${tableInfo.className}Dao {
+public class ${tableInfo.className}DaoImpl extends BaseDaoImpl<${tableInfo.className}Repository, ${tableInfo.className}> implements ${tableInfo.className}Dao {
 
 }

@@ -1,14 +1,14 @@
-package com.vip.xpf.generate;
+package com.vip.utils.generate;
 
 import java.sql.DatabaseMetaData;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class MapperCodeGenerator extends AbstractCodeGenerator {
+public class ControllerCodeGenerator extends AbstractCodeGenerator {
 
-	private MapperCodeGenerator(DatabaseMetaData databaseMetaData, PackageBean packageBean, String tableName,
-			String codeDir, String author) {
-		super(databaseMetaData, packageBean, tableName, codeDir, author);
+	private ControllerCodeGenerator(DatabaseMetaData databaseMetaData, PackageBean packageBean, String tableNamePrefix,
+			String tableName, String codeDir, String author) {
+		super(databaseMetaData, packageBean, tableNamePrefix, tableName, codeDir, author);
 	}
 
 	@Override
@@ -16,23 +16,26 @@ public class MapperCodeGenerator extends AbstractCodeGenerator {
 		List<Consumer<Map<String, Object>>> completers = new LinkedList<>();
 		List<String> imports = new LinkedList<>();
 		imports.add(packageBean.getModelPackage() + "." + getClassName());
+		imports.add(packageBean.getVoPackage() + "." + getClassName() + "Vo");
+		imports.add(packageBean.getFormPackage() + "." + getClassName() + "Form");
+		imports.add(packageBean.getServicePackage() + "." + getClassName() + "Service");
 		completers.add(importsCompleter(imports));
 		return completers;
 	}
 
 	@Override
 	protected String getFileSuffix() {
-		return "Mapper.java";
+		return "Controller.java";
 	}
 
 	@Override
 	protected String getTemplateName() {
-		return "Mapper.ftl";
+		return "Controller.ftl";
 	}
 
 	@Override
 	protected String getBasePackage() {
-		return packageBean.getMapperPackage();
+		return packageBean.getControllerPackage();
 	}
 
 	private Consumer<Map<String, Object>> importsCompleter(List<String> imports) {
@@ -46,8 +49,9 @@ public class MapperCodeGenerator extends AbstractCodeGenerator {
 		};
 	}
 
-	public static MapperCodeGenerator build(DatabaseMetaData metaData, PackageBean packageBean, String tableName,
+	public static ControllerCodeGenerator build(
+			DatabaseMetaData metaData, PackageBean packageBean, String tableNamePrefix, String tableName,
 			String modelDir, String author) {
-		return new MapperCodeGenerator(metaData, packageBean, tableName, modelDir, author);
+		return new ControllerCodeGenerator(metaData, packageBean, tableNamePrefix, tableName, modelDir, author);
 	}
 }
