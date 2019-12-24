@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 
 @Slf4j
 public class FreeMarkerTemplateUtils {
@@ -30,7 +31,9 @@ public class FreeMarkerTemplateUtils {
 		} catch (IOException e) {
 			throw new IllegalStateException(file.getAbsolutePath() + "不存在");
 		}
+		FreeMarkerTemplateUtils.CONFIGURATION.setLocale(new Locale("zh", "CN"));
 		FreeMarkerTemplateUtils.CONFIGURATION.setDefaultEncoding("UTF-8");
+		FreeMarkerTemplateUtils.CONFIGURATION.clearEncodingMap();
 		FreeMarkerTemplateUtils.CONFIGURATION.setTemplateExceptionHandler(
 				TemplateExceptionHandler.RETHROW_HANDLER);
 		FreeMarkerTemplateUtils.CONFIGURATION.setCacheStorage(NullCacheStorage.INSTANCE);
